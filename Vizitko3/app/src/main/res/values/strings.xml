@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Vizitko</string>
+    <string name="upi_ite_ime_i_prezime">Upišite ime i prezime</string>
+    <string name="upisite_broj_necega">Upišite broj necega</string>
+    <string name="upi_ite_email_adresu">Upišite email adresu</string>
+    <string name="upi_te_lozinka">Upišite lozinku</string>
+    <string name="potvrda_lozinke">Potvrdite lozinku</string>
+    <string name="registracija">Registracija</string>
+    <string name="prijava">Prijava</string>
+    <string name="ve_imate_ra_un">Već imate račun?</string>
+    <string name="nemate_ra_un">Nemate račun?</string>
+    <string name="odjava">Odjava</string>
 </resources>

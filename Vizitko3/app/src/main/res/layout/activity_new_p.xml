@@ -12,11 +12,18 @@
         android:layout_height="match_parent"
         android:background="@drawable/bc"/>
 
+    <Button
+        android:id="@+id/bLogOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Odjava"/>
+
     <TextView
-        android:id="@+id/t"
+        android:id="@+id/tvT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New P"/>
+        android:text="new"
+        android:layout_below="@+id/bLogOff"/>
 
     <Button
         android:id="@+id/bNewP"

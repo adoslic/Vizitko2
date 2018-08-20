@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class  WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button bRegister;
     private Button bLogin;
@@ -27,18 +28,20 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        Intent explicitIntent = new Intent();
         switch (view.getId()) {
             case R.id.bRegister:
-                explicitIntent.setClass(getApplicationContext(), RegisterActivity.class);
+                //finish();
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                //Toast.makeText(this, "Gumb za registraciju pritisnut", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bLogin:
-                explicitIntent.setClass(getApplicationContext(), LoginActivity.class);
+                //finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                //Toast.makeText(this, "Gumb za prijavu pritisnut", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 // i'm lazy, do nothing
                 break;
         }
-        this.startActivity(explicitIntent);
     }
 }

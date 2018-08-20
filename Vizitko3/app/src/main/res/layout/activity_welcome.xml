@@ -11,29 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bcground"/>
-
-    <Button
-        android:id="@+id/bRegister"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginStart="45dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Registracija" />
+        android:layout_marginBottom="20dp">
 
-    <Button
-        android:id="@+id/bLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/bRegister"
-        android:layout_alignBottom="@+id/bRegister"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/bRegister"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="Prijava" />
+        <Button
+            android:id="@+id/bRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/registracija" />
 
+        <Button
+            android:id="@+id/bLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/prijava" />
+    </LinearLayout>
 </RelativeLayout>

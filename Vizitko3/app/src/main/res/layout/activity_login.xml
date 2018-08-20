@@ -13,30 +13,46 @@
         android:layout_height="match_parent"
         android:background="@drawable/bcground"/>
 
-    <TableLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="115dp"
-        android:layout_marginBottom="120dp"
-        android:padding="25dp">
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/white"
+        android:layout_margin="30dp">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Broj necega " />
+            android:inputType="textEmailAddress"
+            android:hint="@string/upi_ite_email_adresu"
+            android:layout_margin="10dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/etLozinka"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Lozinka" />
+            android:inputType="textPassword"
+            android:hint="@string/upi_te_lozinka"
+            android:layout_margin="10dp"/>
 
         <Button
             android:id="@+id/bLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Prijava" />
-    </TableLayout>
+            android:layout_marginBottom="10dp"
+            android:text="@string/prijava"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/nemate_ra_un"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
 
 </RelativeLayout>
