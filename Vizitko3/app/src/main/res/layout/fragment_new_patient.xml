@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewPatientFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/white"
+        android:padding="10dp">
+        <EditText
+            android:id="@+id/etIme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite ime"/>
+        <EditText
+            android:id="@+id/etPrezime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite prezime"/>
+
+        <EditText
+            android:id="@+id/etDatumRodenja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite datum rođenja" />
+        <EditText
+            android:id="@+id/etVisina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite visinu"/>
+
+        <EditText
+            android:id="@+id/etTezina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite tezinu" />
+
+        <EditText
+            android:id="@+id/etOsiguranje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite broj zdravstvenog osiguranja"/>
+
+        <EditText
+            android:id="@+id/etBrojNekogBliskog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Upisite broj mobitela bliske osobe" />
+        <Button
+            android:id="@+id/bUnesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unesi novog pacijenta"/>
+    </LinearLayout>
+</FrameLayout>

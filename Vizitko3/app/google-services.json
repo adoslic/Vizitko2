@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "414061691661-dlprjafl68gh9quo9hg3cpfs0mii76h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.korisnik.vizitko",
+            "certificate_hash": "e1ec671b18e08b6bcd5da358033a3dd8319d590f"
+          }
+        },
+        {
           "client_id": "414061691661-j2su503pepuk97g7igfj7evnvbvsjefp.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414061691661-j2su503pepuk97g7igfj7evnvbvsjefp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

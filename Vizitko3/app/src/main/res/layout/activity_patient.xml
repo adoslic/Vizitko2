@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PatientActivity"
+    android:background="@drawable/bc">
+
+    <LinearLayout
+        android:id="@+id/llObrazac"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/white"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/etImePacijenta"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="Ime Prezime"/>
+
+        <EditText
+            android:id="@+id/etGTlak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Upisite gornji tlak"/>
+        <EditText
+            android:id="@+id/etDTlak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Upisite donji tlak"/>
+
+        <EditText
+            android:id="@+id/etDijabetes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Upisite razinu šećera" />
+        <EditText
+            android:id="@+id/etPuls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Upisite puls"/>
+
+        <EditText
+            android:id="@+id/etTemperatura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Upisite temeraturu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/bUnesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unesi podatke"/>
+
+            <Button
+                android:id="@+id/bOdaberi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Odaberi sliku"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvPatientData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/llObrazac"/>
+
+</RelativeLayout>

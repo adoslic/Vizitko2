@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeActivity"
+    android:background="@drawable/bc">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/white"
+        android:padding="10dp">
+        <EditText
+            android:id="@+id/etIme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Upisite ime"/>
+        <EditText
+            android:id="@+id/etPrezime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Upisite prezime"/>
+        <Spinner
+            android:id="@+id/sSpol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spol"/>
+
+        <EditText
+            android:id="@+id/etDatumRodenja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="Upisite datum rođenja" />
+        <EditText
+            android:id="@+id/etVisina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Upisite visinu"/>
+
+        <EditText
+            android:id="@+id/etTezina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Upisite tezinu" />
+
+        <EditText
+            android:id="@+id/etOsiguranje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Upisite broj zdravstvenog osiguranja"/>
+
+        <EditText
+            android:id="@+id/etBrojNekogBliskog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Upisite broj mobitela bliske osobe" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+            android:id="@+id/bUnesi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Unesi pacijenta"/>
+
+            <Button
+                android:id="@+id/bOdaberi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Odaberi sliku"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/nav_items"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"/>
+
+
+</RelativeLayout>

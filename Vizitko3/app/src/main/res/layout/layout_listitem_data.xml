@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical"
+    android:background="@drawable/white">
+    <TextView
+        android:id="@+id/tvgTlak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="Ime"
+        android:paddingEnd="5dp"/>
+
+    <TextView
+        android:id="@+id/tvdTlak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prezime"
+        android:layout_toRightOf="@id/tvgTlak"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/tvPuls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvgTlak"
+        android:text="Vrijeme uzimanja podatka" />
+
+    <TextView
+        android:id="@+id/tvTemperatura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvgTlak"
+        android:layout_alignParentEnd="true"
+        android:text="Broj osiguranja" />
+</RelativeLayout>

@@ -10,4 +10,16 @@
     <string name="ve_imate_ra_un">Već imate račun?</string>
     <string name="nemate_ra_un">Nemate račun?</string>
     <string name="odjava">Odjava</string>
+    <string name="po_etna">Početna</string>
+    <string name="tijek">Tijek</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_timeline">Timeline</string>
+    <string name="nav_account">Account</string>
+
+    <array name="spol">
+        <item>Muški</item>
+        <item>Ženski</item>
+    </array>
+
+
 </resources>

@@ -4,13 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
-
-    <ImageView
-        android:id="@+id/iBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bcground"/>
+    tools:context=".RegisterActivity"
+    android:background="@drawable/bcground">
 
     <LinearLayout
         android:layout_width="match_parent"

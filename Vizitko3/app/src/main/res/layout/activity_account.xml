@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeActivity"
+    android:background="@drawable/bc">
+
+    <LinearLayout
+        android:id="@+id/tv"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/white"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tvIme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        <TextView
+            android:id="@+id/tvPrezime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        <TextView
+            android:id="@+id/tvSpol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <TextView
+            android:id="@+id/tvDatumRodenja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <TextView
+            android:id="@+id/tvDiploma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <TextView
+            android:id="@+id/tvTelBroj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+            <Button
+                android:id="@+id/Izmjeni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Izmjeni podatke"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Odjava"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/odjava"
+        android:layout_below="@+id/tv"/>
+
+
+    <ImageButton
+        android:id="@+id/ibNewPatient"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/oval"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/baseline_add_black_24dp"
+        android:tint="@android:color/white"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/nav_items"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"/>
+
+</RelativeLayout>
