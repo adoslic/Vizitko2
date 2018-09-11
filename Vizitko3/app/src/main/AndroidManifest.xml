@@ -24,7 +24,8 @@
         <activity android:name=".NewPatientActivity" />
         <activity android:name=".TimelineActivity" />
         <activity android:name=".AccountActivity" />
-        <activity android:name=".PatientActivity"></activity>
+        <activity android:name=".PatientActivity"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>

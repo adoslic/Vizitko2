@@ -7,17 +7,6 @@
     tools:context=".HomeActivity"
     android:background="@drawable/bc">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        app:menu="@menu/nav_items"
-        app:itemIconTint="@color/nav_item_colors"
-        app:itemTextColor="@color/nav_item_colors"/>
-
-
     <ListView
         android:id="@+id/lvPatient"
         android:layout_width="match_parent"
@@ -38,4 +27,13 @@
         android:src="@drawable/baseline_add_black_24dp"
         android:tint="@android:color/white"/>
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/nav_items"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"/>
 </RelativeLayout>

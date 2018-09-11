@@ -30,13 +30,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
-
+    final static String DATE_FORMAT = "dd.MM.yyyy";
     private BottomNavigationView bottom_navbar;
     private FirebaseAuth firebaseAuth;
-    private ImageButton ibNewPatient;
+    //private ImageButton ibNewPatient;
     private Button Odjava;
     private Button Izmjeni;
     private DatabaseReference databaseReference;
@@ -46,6 +50,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private TextView tvDatumRodenja;
     private TextView tvDiploma;
     private TextView tvTelBroj;
+    private FirebaseUser currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +67,12 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         tvTelBroj = (TextView) findViewById(R.id.tvTelBroj);
         Odjava = (Button) findViewById(R.id.Odjava);
 
-        //kad se logira user uhvati neki user ID i preko njega napravi profil
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        ///////////////////////
+
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
+        //ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -98,13 +103,13 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 return false;
             }
         });
-        ibNewPatient.setOnClickListener(new View.OnClickListener() {
+        /*ibNewPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent4 = new Intent(AccountActivity.this, NewPatientActivity.class);
                 startActivity(intent4);
             }
-        });
+        });*/
 
     }
 
@@ -112,7 +117,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String id = currentFirebaseUser.getUid();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -206,24 +211,39 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 String diploma = Diploma.getText().toString().trim();
                 String broj = TelBroj.getText().toString().trim();
 
-                if(!(TextUtils.isEmpty(ime) || TextUtils.isEmpty(prezime) || TextUtils.isEmpty(spol) || TextUtils.isEmpty(datum) ||
-                        TextUtils.isEmpty(diploma) || TextUtils.isEmpty(broj) )) {
-                    updateAccount(accountId,ime,prezime,spol,datum,diploma,broj);
-                    //String id = databaseReference.push().getKey();
-                    //Account account = new Account(id, ime, prezime, spol, datum, diploma, broj );
-                    //databaseReference.child(id).setValue(account);
+                if(isDateValid(datum)&& diploma.length()>=10 && broj.length()>=9) {
+                    if (!(TextUtils.isEmpty(ime) || TextUtils.isEmpty(prezime) || TextUtils.isEmpty(spol) || TextUtils.isEmpty(datum) ||
+                            TextUtils.isEmpty(diploma) || TextUtils.isEmpty(broj))) {
+                        updateAccount(accountId, ime, prezime, spol, datum, diploma, broj);
+                        //String id = databaseReference.push().getKey();
+                        //Account account = new Account(id, ime, prezime, spol, datum, diploma, broj );
+                        //databaseReference.child(id).setValue(account);
 
-                    Toast.makeText(AccountActivity.this,"uspilo", LENGTH_LONG).show();
+                        Toast.makeText(AccountActivity.this, "uspilo", LENGTH_LONG).show();
 
-                }
-                else{
-                    Toast.makeText(AccountActivity.this, "unesite sva polja", LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(AccountActivity.this, "unesite sva polja", LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(AccountActivity.this, "unesite valjane podatke", LENGTH_LONG).show();
                 }
                 alertDialog.dismiss();
             }
         });
 
 
+    }
+
+    public static boolean isDateValid(String date)
+    {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     private void updateAccount(String accountId, String accountIme, String accountPrezime, String accountSpol, String accountDatum, String accountDiploma, String accountTelBroj) {

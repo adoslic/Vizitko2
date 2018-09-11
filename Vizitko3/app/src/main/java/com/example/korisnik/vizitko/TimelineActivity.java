@@ -22,7 +22,7 @@ public class TimelineActivity extends AppCompatActivity{
 
     private BottomNavigationView bottom_navbar;
 
-    private ImageButton ibNewPatient;
+    //private ImageButton ibNewPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class TimelineActivity extends AppCompatActivity{
         //this.setUpUI();
 
         bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
+        //ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
 
         Menu menu = bottom_navbar.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -56,13 +56,13 @@ public class TimelineActivity extends AppCompatActivity{
             }
         });
 
-        ibNewPatient.setOnClickListener(new View.OnClickListener() {
+        /*ibNewPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent4 = new Intent(TimelineActivity.this, NewPatientActivity.class);
                 startActivity(intent4);
             }
-        });
+        });*/
 
 
 

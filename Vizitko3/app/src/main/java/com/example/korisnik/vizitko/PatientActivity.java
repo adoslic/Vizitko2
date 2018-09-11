@@ -1,23 +1,47 @@
 package com.example.korisnik.vizitko;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PatientActivity extends AppCompatActivity {
 
+    final static String DATE_FORMAT = "dd.MM.yyyy";
+    private static final int PICK_IMAGE_REQUEST =1;
+    private BottomNavigationView bottom_navbar;
     private TextView etImePacijenta;
     private TextView etGTlak;
     private TextView etDTlak;
@@ -27,60 +51,190 @@ public class PatientActivity extends AppCompatActivity {
     private Button bUnesi;
     private Button bOdaberi;
     private ListView lvPatientData;
+    private Uri uri;
+    private String url = "No Image selected";
 
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
-    List<PatientData> patientData;
+    List<PatientData> patientDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         Init();
-        patientData = new ArrayList<>();
+        patientDataList = new ArrayList<>();
+
         Intent intent = getIntent();
         String Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
         String ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
         String prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
 
         etImePacijenta.setText(ime+" "+prezime);
-
         databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(Id);
+        storageReference = FirebaseStorage.getInstance().getReference("Slike").child(Id);
+
+        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
+        Menu menu = bottom_navbar.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(false);
+
+        bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent = new Intent(PatientActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_timeline:
+                        Intent intent2 = new Intent(PatientActivity.this, TimelineActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_account:
+                        Intent intent3 = new Intent(PatientActivity.this, AccountActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                }
+                return false;
+            }
+        });
+        bOdaberi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OdaberiSliku();
+            }
+        });
 
         bUnesi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UnesiPodatke();
+                //UnesiSliku();
             }
         });
+
+    }
+    private String DohvatiEkstenziju(Uri uri){
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private boolean UnesiSliku(final String id, String dan) {
+        if(uri == null){
+            url =  "No Image selected";
+        }
+        else{
+            StorageReference fileRef = storageReference.child(dan+"."+DohvatiEkstenziju(uri));
+            fileRef.putFile(uri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Uri downloadUri = taskSnapshot.getDownloadUrl();
+                        databaseReference.child(id).child("dataURL").setValue(downloadUri.toString());
+                    }
+            })  .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(PatientActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        return true;
+    }
+
+    private void OdaberiSliku() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            uri = data.getData();
+            bOdaberi.setText("Slika odabrana");
+        }
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                patientDataList.clear();
+
+                for(DataSnapshot patientDataSnapshot : dataSnapshot.getChildren()){
+
+                    PatientData patientData = patientDataSnapshot.getValue(PatientData.class);
+
+                    patientDataList.add(patientData);
+                }
+                PatientDataList adapter = new PatientDataList(PatientActivity.this, patientDataList);
+                lvPatientData.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(PatientActivity.this, databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
     private void UnesiPodatke() {
+        //Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Date date = new Date();
+        String dan = simpleDateFormat.format(date);
+        //Toast.makeText(this, dayOfTheWeek, Toast.LENGTH_LONG).show();
+
         String gTlak = etGTlak.getText().toString().trim();
         String dTlak = etDTlak.getText().toString().trim();
         String dijabetes = etDijabetes.getText().toString().trim();
         String puls = etPuls.getText().toString().trim();
         String temperatura = etTemperatura.getText().toString().trim();
 
+
+        //if(!(TextUtils.isEmpty(gTlak) || TextUtils.isEmpty(dTlak) || TextUtils.isEmpty(dijabetes)
+         //       || TextUtils.isEmpty(puls) || TextUtils.isEmpty(temperatura))) {
         if(!(TextUtils.isEmpty(gTlak) || TextUtils.isEmpty(dTlak) || TextUtils.isEmpty(dijabetes)
-                || TextUtils.isEmpty(puls) || TextUtils.isEmpty(temperatura))) {
+                    || TextUtils.isEmpty(puls) || TextUtils.isEmpty(temperatura))) {
+                int GTlak = Integer.valueOf(gTlak);
+                int DTlak = Integer.valueOf(dTlak);
+                float Dijabetes = Float.valueOf(dijabetes);
+                int Puls = Integer.valueOf(puls);
+                float Temperatura = Float.valueOf(temperatura);
+                if(GTlak>80 && GTlak<250 && DTlak>40 && DTlak<150 && Dijabetes>2 && Dijabetes<30 && Puls>40 && Puls<150 && Temperatura>30 && Temperatura<45){
 
-            String id = databaseReference.push().getKey();
-            PatientData patientData = new PatientData(id, gTlak, dTlak, dijabetes, puls, temperatura);
-            databaseReference.child(id).setValue(patientData);
 
-            Toast.makeText(PatientActivity.this,"uspilo", Toast.LENGTH_LONG).show();
-            finish();
-            Intent intent4 = new Intent(PatientActivity.this, HomeActivity.class);
-            startActivity(intent4);
-        }
-        else{
+                        String URL = "No Image selected";
+                        //String id = databaseReference.push().getKey();
+                        String id = dan;
+                        id = id.replace(".", "");
+                        PatientData patientData = new PatientData(id, gTlak, dTlak, dijabetes, puls, temperatura, dan, URL);
+                        databaseReference.child(id).setValue(patientData);
+
+
+                        Toast.makeText(PatientActivity.this, "uspilo", Toast.LENGTH_LONG).show();
+                        //finish();
+                        //Intent intent4 = new Intent(PatientActivity.this, PatientActivity.class);
+                        //startActivity(intent4);
+                        UnesiSliku(id, dan);
+
+                }
+                else{
+                    Toast.makeText(PatientActivity.this, "unesite stvarne vrijednosti", Toast.LENGTH_LONG).show();
+                }
+        }else{
             Toast.makeText(PatientActivity.this, "unesite sva polja", Toast.LENGTH_LONG).show();
         }
     }

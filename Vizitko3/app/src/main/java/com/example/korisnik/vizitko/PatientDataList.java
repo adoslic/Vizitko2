@@ -33,13 +33,16 @@ public class PatientDataList extends ArrayAdapter<PatientData> {
         TextView tvdTlak = (TextView) listViewItem.findViewById(R.id.tvdTlak);
         TextView tvPuls = (TextView) listViewItem.findViewById(R.id.tvPuls);
         TextView tvTemperatura = (TextView) listViewItem.findViewById(R.id.tvTemperatura);
+        TextView tvVrijeme = (TextView) listViewItem.findViewById(R.id.tvVrijeme);
 
-        PatientData addpatient = patientDataList.get(position);
+        PatientData patientData = patientDataList.get(position);
 
-        tvgTlak.setText(addpatient.getDatagTlak());
-        tvdTlak.setText(addpatient.getDataDTlak());
-        tvPuls.setText(addpatient.getDataPuls());
-        tvTemperatura.setText(addpatient.getDataTemperatura());
+        tvgTlak.setText("Tlak:"+patientData.getDatagTlak());
+        tvdTlak.setText("/"+patientData.getDataDTlak());
+        tvPuls.setText("Puls:"+patientData.getDataPuls());
+        tvTemperatura.setText("Temperatira:"+patientData.getDataTemperatura());
+        tvVrijeme.setText("Datum uzimanja podataka:"+patientData.getDataDate());
+
 
         return listViewItem;
     }

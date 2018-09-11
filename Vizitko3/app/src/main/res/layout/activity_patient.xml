@@ -12,11 +12,11 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:background="@drawable/white"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/etImePacijenta"
@@ -82,8 +82,18 @@
         android:id="@+id/lvPatientData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="50dp"
+        android:layout_margin="25dp"
         android:layout_centerVertical="true"
         android:layout_below="@id/llObrazac"/>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            app:menu="@menu/nav_items"
+            app:itemIconTint="@color/nav_item_colors"
+            app:itemTextColor="@color/nav_item_colors"/>
 
 </RelativeLayout>

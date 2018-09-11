@@ -68,23 +68,13 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="Upisite broj mobitela bliske osobe" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
+
+        <Button
             android:id="@+id/bUnesi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Unesi pacijenta"/>
 
-            <Button
-                android:id="@+id/bOdaberi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Odaberi sliku"/>
-        </LinearLayout>
     </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView

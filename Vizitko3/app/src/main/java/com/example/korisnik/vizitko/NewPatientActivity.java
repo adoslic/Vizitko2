@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +29,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class NewPatientActivity extends AppCompatActivity{
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+public class NewPatientActivity extends AppCompatActivity{
+    final static String DATE_FORMAT = "dd.MM.yyyy";
     private static final int GALERY_INTENT = 1;
     private BottomNavigationView bottom_navbar;
     
@@ -59,15 +64,9 @@ public class NewPatientActivity extends AppCompatActivity{
             }
         });
 
-        bOdaberi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, GALERY_INTENT);
-            }
-        });
-
+        Menu menu = bottom_navbar.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(false);
 
         bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -94,7 +93,6 @@ public class NewPatientActivity extends AppCompatActivity{
     private void Init() {
         databaseReference = FirebaseDatabase.getInstance().getReference("pacijenti");
         storageReference = FirebaseStorage.getInstance().getReference();
-        bOdaberi = (Button) findViewById(R.id.bOdaberi);
         bUnesi = (Button) findViewById(R.id.bUnesi);
         etIme = (EditText) findViewById(R.id.etIme);
         etPrezime = (EditText) findViewById(R.id.etPrezime);
@@ -119,37 +117,40 @@ public class NewPatientActivity extends AppCompatActivity{
 
         if(!(TextUtils.isEmpty(ime) || TextUtils.isEmpty(prezime) || TextUtils.isEmpty(datum) || TextUtils.isEmpty(visina) ||
                 TextUtils.isEmpty(tezina) || TextUtils.isEmpty(osiguranje) || TextUtils.isEmpty(telBroj))) {
+                float Visina = Float.valueOf(visina);
+                float Tezina = Float.valueOf(tezina);
+                if(isDateValid(datum)&& Visina<250 && Visina>50 && Tezina<250 && Tezina>40 && osiguranje.length()>=10 && telBroj.length()>=9){
+                //if(!(TextUtils.isEmpty(ime) || TextUtils.isEmpty(prezime) || TextUtils.isEmpty(datum) || TextUtils.isEmpty(visina) ||
+                   // TextUtils.isEmpty(tezina) || TextUtils.isEmpty(osiguranje) || TextUtils.isEmpty(telBroj))) {
 
-            String id = databaseReference.push().getKey();
-            AddPatient addPatient = new AddPatient(id, ime, prezime, spol, datum, visina, tezina, osiguranje, telBroj);
-            databaseReference.child(id).setValue(addPatient);
+                String id = databaseReference.push().getKey();
+                AddPatient addPatient = new AddPatient(id, ime, prezime, spol, datum, visina, tezina, osiguranje, telBroj);
+                databaseReference.child(id).setValue(addPatient);
 
-            Toast.makeText(NewPatientActivity.this,"uspilo", Toast.LENGTH_LONG).show();
-            finish();
-            Intent intent4 = new Intent(NewPatientActivity.this, HomeActivity.class);
-            startActivity(intent4);
-        }
-        else{
+                Toast.makeText(NewPatientActivity.this,"uspilo", Toast.LENGTH_LONG).show();
+                finish();
+                Intent intent4 = new Intent(NewPatientActivity.this, HomeActivity.class);
+                startActivity(intent4);
+            }
+            else{
+                    Toast.makeText(NewPatientActivity.this, "unesite stvarne podatke", Toast.LENGTH_LONG).show();
+            }
+        }else{
             Toast.makeText(NewPatientActivity.this, "unesite sva polja", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //DODATNO PROUČI I PODESI
-        //
-        if (requestCode == GALERY_INTENT && resultCode == RESULT_OK){
-            Uri uri = data.getData();
-            StorageReference filepath = storageReference.child("Photos").child(uri.getLastPathSegment());
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(NewPatientActivity.this, "uspilo", Toast.LENGTH_LONG).show();
-                }
-            });
+    public static boolean isDateValid(String date)
+    {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
         }
     }
+
 }
