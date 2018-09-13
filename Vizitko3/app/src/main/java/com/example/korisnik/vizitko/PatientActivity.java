@@ -40,6 +40,9 @@ import java.util.List;
 public class PatientActivity extends AppCompatActivity {
 
     final static String DATE_FORMAT = "dd.MM.yyyy";
+    public static final String PATIENT_ID = "PatientID";
+    public static final String PATIENT_NAME = "PatientName";
+    public static final String PATIENT_LNAME = "PatientLName";
     private static final int PICK_IMAGE_REQUEST =1;
     private BottomNavigationView bottom_navbar;
     private TextView etImePacijenta;
@@ -58,6 +61,7 @@ public class PatientActivity extends AppCompatActivity {
     private StorageReference storageReference;
 
     List<PatientData> patientDataList;
+    private Button bStanje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +71,9 @@ public class PatientActivity extends AppCompatActivity {
         patientDataList = new ArrayList<>();
 
         Intent intent = getIntent();
-        String Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
-        String ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
-        String prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
+        final String Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
+        final String ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
+        final String prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
 
         etImePacijenta.setText(ime+" "+prezime);
         databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(Id);
@@ -112,7 +116,17 @@ public class PatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UnesiPodatke();
-                //UnesiSliku();
+            }
+        });
+
+        bStanje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
+                intent.putExtra(PATIENT_ID, Id);
+                intent.putExtra(PATIENT_NAME, ime);
+                intent.putExtra(PATIENT_LNAME, prezime);
+                startActivity(intent);
             }
         });
 
@@ -194,8 +208,7 @@ public class PatientActivity extends AppCompatActivity {
         //Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
         Date date = new Date();
-        String dan = simpleDateFormat.format(date);
-        //Toast.makeText(this, dayOfTheWeek, Toast.LENGTH_LONG).show();
+        String dan = simpleDateFormat.format(date);//Toast.makeText(this, dayOfTheWeek, Toast.LENGTH_LONG).show();
 
         String gTlak = etGTlak.getText().toString().trim();
         String dTlak = etDTlak.getText().toString().trim();
@@ -217,6 +230,7 @@ public class PatientActivity extends AppCompatActivity {
 
 
                         String URL = "No Image selected";
+                        //dan = "14.09.2018";
                         //String id = databaseReference.push().getKey();
                         String id = dan;
                         id = id.replace(".", "");
@@ -248,6 +262,7 @@ public class PatientActivity extends AppCompatActivity {
         etTemperatura = (TextView) findViewById(R.id.etTemperatura);
         bUnesi = (Button) findViewById(R.id.bUnesi);
         bOdaberi = (Button) findViewById(R.id.bOdaberi);
+        bStanje = (Button) findViewById(R.id.bStanje);
         lvPatientData = (ListView) findViewById(R.id.lvPatientData);
 
     }

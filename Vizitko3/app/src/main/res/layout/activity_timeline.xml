@@ -7,6 +7,58 @@
     tools:context=".HomeActivity"
     android:background="@drawable/bc">
 
+    <TextView
+        android:id="@+id/etImePacijenta"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="Ime Prezime"/>
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/graph"
+        android:background="@drawable/white"
+        android:layout_below="@+id/etImePacijenta"/>
+
+    <LinearLayout
+        android:id="@+id/buttons1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graph">
+        <Button
+            android:id="@+id/bGTlak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gornji tlak"/>
+        <Button
+            android:id="@+id/bDTlak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Doljnji tlak"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/buttons2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttons1">
+        <Button
+            android:id="@+id/bPuls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Puls"/>
+        <Button
+            android:id="@+id/bTemperatura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Temperatura"/>
+    </LinearLayout>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navbar"
         android:layout_width="match_parent"
@@ -17,9 +69,5 @@
         app:itemIconTint="@color/nav_item_colors"
         app:itemTextColor="@color/nav_item_colors"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="timeline"/>
 
 </RelativeLayout>
