@@ -31,20 +31,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="Upisite gornji tlak"/>
+            android:hint="Upisite sistolicki tlak"/>
         <EditText
             android:id="@+id/etDTlak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="Upisite donji tlak"/>
+            android:hint="Upisite dijastolicki tlak"/>
 
         <EditText
             android:id="@+id/etDijabetes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Upisite razinu šećera" />
+            android:hint="Upisite razinu secera" />
         <EditText
             android:id="@+id/etPuls"
             android:layout_width="match_parent"

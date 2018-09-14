@@ -28,7 +28,7 @@
         android:id="@+id/tvPuls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="65"
+        android:text="Puls"
         android:layout_toRightOf="@id/tvdTlak"
         android:layout_marginEnd="10dp"/>
 
@@ -36,7 +36,7 @@
         android:id="@+id/tvTemperatura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12"
+        android:text="Temperatura"
         android:layout_toRightOf="@id/tvPuls"/>
 
     <TextView

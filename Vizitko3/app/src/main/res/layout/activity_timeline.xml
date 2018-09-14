@@ -16,6 +16,7 @@
         android:text="Ime Prezime"/>
 
     <com.jjoe64.graphview.GraphView
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/graph"
@@ -32,13 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gornji tlak"/>
+            android:text="Sistolički tlak"/>
         <Button
             android:id="@+id/bDTlak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Doljnji tlak"/>
+            android:text="Dijastolički tlak"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/buttons2"

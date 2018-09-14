@@ -28,14 +28,11 @@ public class HomeActivity extends AppCompatActivity{
     public static final String PATIENT_ID = "PatientID";
     public static final String PATIENT_NAME = "PatientName";
     public static final String PATIENT_LNAME = "PatientLName";
-
     private BottomNavigationView bottom_navbar;
-
-
     private ImageButton ibNewPatient;
     private ListView lvPatient;
     private DatabaseReference databaseReference;
-    List<AddPatient> patientList;
+    private List<AddPatient> patientList;
 
     @Override
     protected void onStart() {
@@ -54,15 +51,13 @@ public class HomeActivity extends AppCompatActivity{
                 }
                 PatientList adapter = new PatientList(HomeActivity.this, patientList);
                 lvPatient.setAdapter(adapter);
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(HomeActivity.this, databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
@@ -70,17 +65,7 @@ public class HomeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("pacijenti");
-        ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
-
-        lvPatient = (ListView) findViewById(R.id.lvPatient);
-
-        patientList = new ArrayList<>();
-
-        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        Menu menu = bottom_navbar.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
+        Init();
 
         bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -88,15 +73,10 @@ public class HomeActivity extends AppCompatActivity{
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         break;
-                    case R.id.nav_timeline:
-                        Intent intent2 = new Intent(HomeActivity.this, TimelineActivity.class);
-                        startActivity(intent2);
-                        break;
                     case R.id.nav_account:
                         Intent intent3 = new Intent(HomeActivity.this, AccountActivity.class);
                         startActivity(intent3);
                         break;
-
                 }
                 return false;
             }
@@ -121,5 +101,19 @@ public class HomeActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+    }
+
+    private void Init() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("pacijenti");
+
+        ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
+        lvPatient = (ListView) findViewById(R.id.lvPatient);
+
+        patientList = new ArrayList<>();
+
+        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
+        Menu menu = bottom_navbar.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
     }
 }

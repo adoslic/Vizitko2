@@ -25,35 +25,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvLogin;
 
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        setUpUI();
-    }
 
-    private void setUpUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
             finish();
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
 
+        setUpUI();
+    }
+
+    private void setUpUI() {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etLozinka = (EditText) findViewById(R.id.etLozinka);
-
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvLogin.setOnClickListener(this);
-
         bRegister = (Button) findViewById(R.id.bRegister);
         bRegister.setOnClickListener(this);
-
         progressDialog = new ProgressDialog(this);
-
-
     }
 
     @Override
@@ -67,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             default:
-                // i'm lazy, do nothing
                 break;
 
         }
@@ -94,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
                 else{
-                    Toast.makeText(RegisterActivity.this, "registracija nije uspjela", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registracija nije uspjela", Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
             }

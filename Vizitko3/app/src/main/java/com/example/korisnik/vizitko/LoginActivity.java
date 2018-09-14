@@ -30,25 +30,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.setUpUI();
-    }
 
-    private void setUpUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
             finish();
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
 
-        this.bLogin = (Button) findViewById(R.id.bLogin);
-        this.bLogin.setOnClickListener(this);
+        setUpUI();
+    }
 
-        this.tvRegister = (TextView) findViewById(R.id.tvRegister);
-        this.tvRegister.setOnClickListener(this);
-
-        this.etEmail = (EditText) findViewById(R.id.etEmail);
-        this.etLozinka = (EditText) findViewById(R.id.etLozinka);
-
+    private void setUpUI() {
+        bLogin = (Button) findViewById(R.id.bLogin);
+        bLogin.setOnClickListener(this);
+        tvRegister = (TextView) findViewById(R.id.tvRegister);
+        tvRegister.setOnClickListener(this);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etLozinka = (EditText) findViewById(R.id.etLozinka);
         progressDialog = new ProgressDialog(this);
     }
 
@@ -63,7 +61,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
                 break;
             default:
-                // i'm lazy, do nothing
                 break;
 
         }
@@ -85,12 +82,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
-                    //Toast.makeText(RegisterActivity.this, "registracija uspjela", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegisterActivity.this, "prijava uspjela", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
                 else{
-                    Toast.makeText(LoginActivity.this, "prijava nije uspjela", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Prijava nije uspjela", Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
             }

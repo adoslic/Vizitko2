@@ -1,6 +1,7 @@
 package com.example.korisnik.vizitko;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -37,54 +38,36 @@ import static com.example.korisnik.vizitko.PatientActivity.PATIENT_NAME;
 
 public class TimelineActivity extends AppCompatActivity implements View.OnClickListener {
     final static String DATE_FORMAT = "dd.MM.yyyy";
-    private static final String PATIENT_ID = "patientID";
-    private static final int BUTTON_NUMBER = 5;
-
     private BottomNavigationView bottom_navbar;
-
-    //private ImageButton ibNewPatient;
     private DatabaseReference databaseReference;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
-    GraphView graphView;
-    LineGraphSeries series;
+    private GraphView graphView;
+    private LineGraphSeries series;
     private Button bGTlak;
     private Button bDTlak;
     private Button bPuls;
     private Button bTemperatura;
     private TextView etImePacijenta;
     private String id;
-    private String ime;
-    private String prezime;
-
     private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        Init();
+
         Intent intent = getIntent();
+        id = intent.getStringExtra(HomeActivity.PATIENT_ID);
+        String ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
+        String prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
 
-        final String Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
-        final String Ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
-        final String Prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
-        //final int i = intent.getIntExtra(TimelineActivity.BUTTON_NUMBER);
-        id = Id;
-        ime = Ime;
-        prezime = Prezime;
-
-        etImePacijenta.setText(Ime+" "+Prezime);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(Id);
+        Init();
+        etImePacijenta.setText(ime+" "+prezime);
+        etImePacijenta.setTextColor(0xffffffff);
 
         bGTlak.setOnClickListener(this);
         bDTlak.setOnClickListener(this);
         bPuls.setOnClickListener(this);
         bTemperatura.setOnClickListener(this);
-
-        series = new LineGraphSeries();
-        graphView.addSeries(series);
-        graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
 
         graphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
@@ -97,10 +80,6 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        Menu menu = bottom_navbar.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
         bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -109,31 +88,35 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
                         Intent intent1 = new Intent(TimelineActivity.this, HomeActivity.class);
                         startActivity(intent1);
                         break;
-                    case R.id.nav_timeline:
-                        break;
                     case R.id.nav_account:
                         Intent intent3 = new Intent(TimelineActivity.this, AccountActivity.class);
                         startActivity(intent3);
                         break;
-
+                    default:
+                        break;
                 }
                 return false;
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private void Init() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(id);
+
         etImePacijenta = (TextView) findViewById(R.id.etImePacijenta);
         bGTlak = (Button) findViewById(R.id.bGTlak);
         bDTlak = (Button) findViewById(R.id.bDTlak);
         bPuls = (Button) findViewById(R.id.bPuls);
         bTemperatura = (Button) findViewById(R.id.bTemperatura);
         graphView = (GraphView) findViewById(R.id.graph);
+        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
+        Menu menu = bottom_navbar.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        series = new LineGraphSeries();
+        graphView.addSeries(series);
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
     }
 
     @Override

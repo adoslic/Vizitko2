@@ -40,7 +40,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     final static String DATE_FORMAT = "dd.MM.yyyy";
     private BottomNavigationView bottom_navbar;
     private FirebaseAuth firebaseAuth;
-    //private ImageButton ibNewPatient;
     private Button Odjava;
     private Button Izmjeni;
     private DatabaseReference databaseReference;
@@ -72,7 +71,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
 
         bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        //ibNewPatient = (ImageButton) findViewById(R.id.ibNewPatient);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -82,7 +80,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         Odjava.setOnClickListener(this);
 
         Menu menu = bottom_navbar.getMenu();
-        MenuItem menuItem = menu.getItem(2);
+        MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
         bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -92,32 +90,18 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                         Intent intent1 = new Intent(AccountActivity.this, HomeActivity.class);
                         startActivity(intent1);
                         break;
-                    case R.id.nav_timeline:
-                        Intent intent2 = new Intent(AccountActivity.this, TimelineActivity.class);
-                        startActivity(intent2);
-                        break;
                     case R.id.nav_account:
                         break;
-
                 }
                 return false;
             }
         });
-        /*ibNewPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent4 = new Intent(AccountActivity.this, NewPatientActivity.class);
-                startActivity(intent4);
-            }
-        });*/
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        //currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String id = currentFirebaseUser.getUid();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -138,8 +122,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                     tvDatumRodenja.setText("DATUM RODENJA: "+datum);
                     tvDiploma.setText("BR. DIPLOME: "+diploma);
                     tvTelBroj.setText("TEL. BROJ: "+broj);
-
-
                 }
                 else{
                     tvIme.setText("IME: ");
@@ -153,7 +135,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(AccountActivity.this, databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -165,7 +147,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.Izmjeni:
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String id = currentFirebaseUser.getUid();
-                //Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
                 showUpdateDialog(id);
                 break;
             case R.id.Odjava:
@@ -215,9 +196,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                     if (!(TextUtils.isEmpty(ime) || TextUtils.isEmpty(prezime) || TextUtils.isEmpty(spol) || TextUtils.isEmpty(datum) ||
                             TextUtils.isEmpty(diploma) || TextUtils.isEmpty(broj))) {
                         updateAccount(accountId, ime, prezime, spol, datum, diploma, broj);
-                        //String id = databaseReference.push().getKey();
-                        //Account account = new Account(id, ime, prezime, spol, datum, diploma, broj );
-                        //databaseReference.child(id).setValue(account);
 
                         Toast.makeText(AccountActivity.this, "uspilo", LENGTH_LONG).show();
 

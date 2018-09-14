@@ -16,7 +16,7 @@ public class  WelcomeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        this.setUpUI();
+        setUpUI();
     }
 
     private void setUpUI() {
@@ -30,17 +30,16 @@ public class  WelcomeActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bRegister:
-                //finish();
+                finish();
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
                 //Toast.makeText(this, "Gumb za registraciju pritisnut", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bLogin:
-                //finish();
+                finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 //Toast.makeText(this, "Gumb za prijavu pritisnut", Toast.LENGTH_SHORT).show();
                 break;
             default:
-                // i'm lazy, do nothing
                 break;
         }
     }

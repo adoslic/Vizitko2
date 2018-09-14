@@ -40,7 +40,7 @@ public class PatientDataList extends ArrayAdapter<PatientData> {
         tvgTlak.setText("Tlak:"+patientData.getDatagTlak());
         tvdTlak.setText("/"+patientData.getDataDTlak());
         tvPuls.setText("Puls:"+patientData.getDataPuls());
-        tvTemperatura.setText("Temperatira:"+patientData.getDataTemperatura());
+        tvTemperatura.setText("Temperatura:"+patientData.getDataTemperatura());
         tvVrijeme.setText("Datum uzimanja podataka:"+patientData.getDataDate());
 
 

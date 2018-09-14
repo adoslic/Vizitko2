@@ -55,34 +55,24 @@ public class PatientActivity extends AppCompatActivity {
     private Button bOdaberi;
     private ListView lvPatientData;
     private Uri uri;
-    private String url = "No Image selected";
-
+    private String Id;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
-    List<PatientData> patientDataList;
+    private List<PatientData> patientDataList;
     private Button bStanje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-        Init();
-        patientDataList = new ArrayList<>();
 
         Intent intent = getIntent();
-        final String Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
+        Id = intent.getStringExtra(HomeActivity.PATIENT_ID);
         final String ime = intent.getStringExtra(HomeActivity.PATIENT_NAME);
         final String prezime = intent.getStringExtra(HomeActivity.PATIENT_LNAME);
-
+        Init();
         etImePacijenta.setText(ime+" "+prezime);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(Id);
-        storageReference = FirebaseStorage.getInstance().getReference("Slike").child(Id);
-
-        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
-        Menu menu = bottom_navbar.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(false);
 
         bottom_navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -92,15 +82,10 @@ public class PatientActivity extends AppCompatActivity {
                         Intent intent = new Intent(PatientActivity.this, HomeActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.nav_timeline:
-                        Intent intent2 = new Intent(PatientActivity.this, TimelineActivity.class);
-                        startActivity(intent2);
-                        break;
                     case R.id.nav_account:
                         Intent intent3 = new Intent(PatientActivity.this, AccountActivity.class);
                         startActivity(intent3);
                         break;
-
                 }
                 return false;
             }
@@ -139,7 +124,7 @@ public class PatientActivity extends AppCompatActivity {
 
     private boolean UnesiSliku(final String id, String dan) {
         if(uri == null){
-            url =  "No Image selected";
+            //slika nije odabrana
         }
         else{
             StorageReference fileRef = storageReference.child(dan+"."+DohvatiEkstenziju(uri));
@@ -175,7 +160,6 @@ public class PatientActivity extends AppCompatActivity {
             uri = data.getData();
             bOdaberi.setText("Slika odabrana");
         }
-
     }
 
     @Override
@@ -205,10 +189,9 @@ public class PatientActivity extends AppCompatActivity {
     }
 
     private void UnesiPodatke() {
-        //Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
         Date date = new Date();
-        String dan = simpleDateFormat.format(date);//Toast.makeText(this, dayOfTheWeek, Toast.LENGTH_LONG).show();
+        String dan = simpleDateFormat.format(date);
 
         String gTlak = etGTlak.getText().toString().trim();
         String dTlak = etDTlak.getText().toString().trim();
@@ -216,9 +199,6 @@ public class PatientActivity extends AppCompatActivity {
         String puls = etPuls.getText().toString().trim();
         String temperatura = etTemperatura.getText().toString().trim();
 
-
-        //if(!(TextUtils.isEmpty(gTlak) || TextUtils.isEmpty(dTlak) || TextUtils.isEmpty(dijabetes)
-         //       || TextUtils.isEmpty(puls) || TextUtils.isEmpty(temperatura))) {
         if(!(TextUtils.isEmpty(gTlak) || TextUtils.isEmpty(dTlak) || TextUtils.isEmpty(dijabetes)
                     || TextUtils.isEmpty(puls) || TextUtils.isEmpty(temperatura))) {
                 int GTlak = Integer.valueOf(gTlak);
@@ -228,28 +208,21 @@ public class PatientActivity extends AppCompatActivity {
                 float Temperatura = Float.valueOf(temperatura);
                 if(GTlak>80 && GTlak<250 && DTlak>40 && DTlak<150 && Dijabetes>2 && Dijabetes<30 && Puls>40 && Puls<150 && Temperatura>30 && Temperatura<45){
 
-
                         String URL = "No Image selected";
-                        //dan = "14.09.2018";
-                        //String id = databaseReference.push().getKey();
                         String id = dan;
                         id = id.replace(".", "");
                         PatientData patientData = new PatientData(id, gTlak, dTlak, dijabetes, puls, temperatura, dan, URL);
                         databaseReference.child(id).setValue(patientData);
 
+                        Toast.makeText(PatientActivity.this, "Podaci uspješno dodani", Toast.LENGTH_LONG).show();
 
-                        Toast.makeText(PatientActivity.this, "uspilo", Toast.LENGTH_LONG).show();
-                        //finish();
-                        //Intent intent4 = new Intent(PatientActivity.this, PatientActivity.class);
-                        //startActivity(intent4);
                         UnesiSliku(id, dan);
-
                 }
                 else{
-                    Toast.makeText(PatientActivity.this, "unesite stvarne vrijednosti", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PatientActivity.this, "Unesite stvarne vrijednosti", Toast.LENGTH_LONG).show();
                 }
         }else{
-            Toast.makeText(PatientActivity.this, "unesite sva polja", Toast.LENGTH_LONG).show();
+            Toast.makeText(PatientActivity.this, "Unesite sva polja", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -265,5 +238,14 @@ public class PatientActivity extends AppCompatActivity {
         bStanje = (Button) findViewById(R.id.bStanje);
         lvPatientData = (ListView) findViewById(R.id.lvPatientData);
 
+        patientDataList = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Podaci").child(Id);
+        storageReference = FirebaseStorage.getInstance().getReference("Slike").child(Id);
+
+        bottom_navbar = (BottomNavigationView) findViewById(R.id.bottom_navbar);
+        Menu menu = bottom_navbar.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(false);
     }
 }
